@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User's business profile and settings",
+      "type": "object",
+      "properties": {
+        "businessName": { "type": "string" },
+        "businessType": { 
+          "type": "string",
+          "enum": ["Freelancer", "Online Seller", "Small Shop Owner", "Agency Owner", "Service Provider"]
+        },
+        "currency": { "type": "string" },
+        "onboarded": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["businessName", "businessType", "currency"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Income or expense record",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["amount", "type", "category", "date", "userId"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Business task or scheduled activity",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "status": { "type": "string", "enum": ["todo", "in-progress", "completed"] },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" },
+        "impact": { "type": "string", "description": "AI-calculated business impact" }
+      },
+      "required": ["title", "priority", "status", "userId"]
+    },
+    "Memory": {
+      "title": "Business Memory",
+      "description": "AI-summarized logs and patterns",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["insight", "pattern", "routine"] },
+        "userId": { "type": "string" }
+      },
+      "required": ["content", "userId"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Main user settings and profile"
+    },
+    "transactions": {
+      "schema": "Transaction",
+      "description": "Global collection of business transactions"
+    },
+    "tasks": {
+      "schema": "Task",
+      "description": "Business tasks and scheduling"
+    },
+    "memories": {
+      "schema": "Memory",
+      "description": "AI-generated business memory logs"
+    }
+  }
+}
